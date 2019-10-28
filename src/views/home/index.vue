@@ -4,17 +4,17 @@
     <el-aside :width="isOpen?'200px':'64px'">
       <div class="logo" :class="{smallLogo:!isOpen}"></div>
       <el-menu
-        default-active="1"
+        default-active="/"
         background-color="#002033"
         text-color="#fff"
         active-text-color="#ffd04b"
         style="border-right:none"
         :collapse="!isOpen"
         :collapse-transition="false"
-        router="true"
+        :router="true"
       >
-      <!-- :collapse-transition="false"关闭动画 -->
-      <!-- 是否使用 vue-router 的模式，启用该模式会在激活导航时以 index 作为 path 进行路由跳转 -->
+        <!-- :collapse-transition="false"关闭动画 -->
+        <!-- 是否使用 vue-router 的模式，启用该模式会在激活导航时以 index 作为 path 进行路由跳转 -->
         <el-menu-item index="/">
           <i class="el-icon-s-home"></i>
           <span slot="title">首页</span>
@@ -52,10 +52,10 @@
         <span class="text">江苏传智播客科技教育有限公司</span>
         <!-- //下拉菜单 -->
 
-        <el-dropdown>
+         <el-dropdown class="dropdown">
           <span class="el-dropdown-link">
-            <img class="headIcon" src="../../assets/avatar.jpg" alt />
-            下拉菜单
+            <img class="headIcon" src="../../assets/avatar.jpg" alt="">
+            <span class="userName">用户名称</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -64,6 +64,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
+
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -111,27 +112,34 @@ export default {
 
   //头部
   .el-header {
+     line-height: 60px;
     border-bottom: 1px solid #ddd;
     .el-dropdown-link {
       cursor: pointer;
     }
-    .el-icon-arrow-down {
-      font-size: 12px;
-    }
+
     .icon {
-      line-height: 60px;
-      cursor: pointer;
+       font-size: 30px;
+      vertical-align: middle;
+    }
+     .text {
+      margin-left: 10px;
+      vertical-align: middle;
     }
 
-    .el-dropdown {
+    .dropdown{
       float: right;
-      line-height: 60px;
-      vertical-align: middle;
-    }
-    .headIcon {
-      width: 20px;
-      height: 20px;
-      vertical-align: middle;
+      .headIcon{
+        width: 30px;
+        height: 30px;
+        vertical-align: middle;
+        margin: left
+      }
+      .userName{
+        font-weight: bold;
+        vertical-align: middle;
+        margin-left: 5px;
+      }
     }
   }
 }

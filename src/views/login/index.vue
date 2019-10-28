@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import local from '@/utils/local.js'
 const checkMobile = function (rule, value, callback) {
   if (/^1[3-9]\d{9}$/.test(value)) {
     callback()
@@ -42,6 +43,10 @@ export default {
           this.$axios
             .post('authorizations', this.form)
             .then(res => {
+              // 保存用户信息
+              local.setUser(res.data.data)
+              console.log(12)
+
               this.$router.push('/')
             })
             .catch(() => {
@@ -55,8 +60,8 @@ export default {
     return {
       form: {
         name: '',
-        code: '',
-        mobile: ''
+        code: '246810',
+        mobile: '13333333333'
       },
       rules: {
         mobile: [
