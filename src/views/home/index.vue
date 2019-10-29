@@ -4,7 +4,7 @@
     <el-aside :width="isOpen?'200px':'64px'">
       <div class="logo" :class="{smallLogo:!isOpen}"></div>
       <el-menu
-        default-active="/"
+        :default-active="$route.path"
         background-color="#002033"
         text-color="#fff"
         active-text-color="#ffd04b"
@@ -52,15 +52,17 @@
         <span class="text">江苏传智播客科技教育有限公司</span>
         <!-- //下拉菜单 -->
 
-         <el-dropdown class="dropdown">
+         <el-dropdown class="dropdown" @command="handleClick">
           <span class="el-dropdown-link">
-            <img class="headIcon" src="../../assets/avatar.jpg" alt="">
-            <span class="userName">用户名称</span>
+            <img class="headIcon" :src="userInfo.photo" alt="">
+            <span class="userName">{{userInfo.name}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+            <!-- <el-dropdown-item icon="el-icon-setting" @click.native="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" @click.native="logout">退出登录</el-dropdown-item> -->
+                   <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" command="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -73,15 +75,35 @@
 </template>
 
 <script>
+import local from '@/utils/local'
 export default {
   data () {
     return {
-      isOpen: true
+      isOpen: true,
+      userInfo: {}
     }
+  },
+  created () {
+    const user = local.getUser() || {}
+    this.userInfo.name = user.name
+    this.userInfo.photo = user.photo
   },
   methods: {
     toggleMenu () {
       this.isOpen = !this.isOpen
+    },
+    logout () {
+      local.delUser()
+      this.$router.push('/login')
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    handleClick (command) {
+      // command 值  setting | logout
+      // this[command]() === this.setting()
+      // this[logout]() === this.logout()
+      this[command]()
     }
   }
 }

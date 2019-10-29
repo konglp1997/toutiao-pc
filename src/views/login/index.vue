@@ -36,22 +36,26 @@ const checkMobile = function (rule, value, callback) {
 export default {
   methods: {
     login () {
-      console.log(this.$router)
-
-      this.$refs['loginForm'].validate(valid => {
+      this.$refs['loginForm'].validate(async valid => {
         if (valid) {
-          this.$axios
-            .post('authorizations', this.form)
-            .then(res => {
-              // 保存用户信息
-              local.setUser(res.data.data)
-              console.log(12)
+          // this.$axios
+          //   .post('authorizations', this.form)
+          //   .then(res => {
+          //     // 保存用户信息
+          //     local.setUser(res.data.data)
 
-              this.$router.push('/')
-            })
-            .catch(() => {
-              this.$message.error('手机号或验证码错误')
-            })
+          //     this.$router.push('/')
+          //   })
+          //   .catch(() => {
+          //     this.$message.error('手机号或验证码错误')
+          //   })
+          try {
+            const { data: { data } } = await this.$axios.post('authorizations', this.form)
+            local.setUser(data)
+            this.$router.push('/')
+          } catch (e) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     }

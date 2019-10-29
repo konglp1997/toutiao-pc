@@ -11,8 +11,7 @@ axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   // 拦截成功  往headers中加token
-  const user = local.getUser()
-  console.log(user)
+  const user = local.getUser() || {}
 
   config.headers.Authorization = `Bearer ${user.token}`
 
