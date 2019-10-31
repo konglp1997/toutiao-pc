@@ -1,8 +1,18 @@
 import axios from 'axios'
 import local from '@/utils/local.js'
 import router from '@/router'
+import JSONBIG from 'json-bigint'
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 // 设置默认的请求头
+axios.defaults.transformResponse = [(data) => {
+  // 对data进行格式转换
+  try {
+    return JSONBIG.parse(data)
+  } catch (e) {
+    return data
+  }
+}]
+
 // if (local.getUser()) {
 //   axios.defaults.headers.Authorization = `Bearer ${local.getUser().token}`
 // }
