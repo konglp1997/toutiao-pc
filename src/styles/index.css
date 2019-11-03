@@ -24,3 +24,12 @@
   height: 178px;
   display: block;
 }
+.ql-toolbar.ql-snow {
+  padding: 0;
+}
+.ql-container.ql-snow {
+  height: 250px;
+}
+.el-dialog__body {
+  padding-bottom: 0;
+}

@@ -1,9 +1,84 @@
 <template>
-  <div class="container-publish">123</div>
+  <el-card>
+    <div slot="header">
+      <my-bread>发布文章</my-bread>
+    </div>
+    <!-- 表单 -->
+    <el-form label-width="120px">
+      <el-form-item label="标题：">
+        <el-input style="width:400px" v-model="article.title"></el-input>
+      </el-form-item>
+
+      <el-form-item label="内容：">
+        <quill-editor v-model="article.content" :options="editorOption"></quill-editor>
+      </el-form-item>
+
+      <el-form-item label="封面：">
+        <el-radio-group v-model="article.cover.type">
+          <el-radio :label="1">单图</el-radio>
+          <el-radio :label="3">三图</el-radio>
+          <el-radio :label="0">无图</el-radio>
+          <el-radio :label="-1">自动</el-radio>
+        </el-radio-group>
+        <!-- 封面图组件 -->
+            <div>
+              <my-image></my-image>
+              <my-image></my-image>
+              <my-image></my-image>
+            </div>
+      </el-form-item>
+
+      <el-form-item label="频道：">
+        <my-channel v-model="article.channel_id"></my-channel>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary">发表</el-button>
+        <el-button>存入草稿</el-button>
+      </el-form-item>
+    </el-form>
+  </el-card>
 </template>
 
 <script>
-export default {}
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
+
+export default {
+  components: {
+    quillEditor
+  },
+
+  data () {
+    return {
+      article: {
+        content: null,
+        title: null,
+        cover: {
+          type: 1
+        },
+        channel_id: null
+      },
+      editorOption: {
+        placeholder: '',
+        modules: {
+          toolbar: [
+
+            ['blockquote', 'code-block'],
+
+            [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }]
+          ]
+        }
+      }
+    }
+  }
+}
 </script>
 
-<style scoped lang='less'></style>
+<style scoped lang='less'>
+</style>
