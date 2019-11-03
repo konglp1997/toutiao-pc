@@ -6,6 +6,8 @@ import Welcome from '../views/welcome'
 import NotFound from '../views/404'
 import local from '@/utils/local'
 import Article from '@/views/article/article.vue'
+import Image from '@/views/image'
+import Publish from '@/views/publish/publish.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +20,8 @@ const router = new VueRouter({
   routes: [
     {
       path: '/login',
-      component: Login },
+      component: Login
+    },
     {
       path: '/',
       component: Home,
@@ -28,6 +31,12 @@ const router = new VueRouter({
       }, {
         path: '/article',
         component: Article
+      }, {
+        path: '/image',
+        component: Image
+      }, {
+        path: '/publish',
+        component: Publish
       }]
     },
     {

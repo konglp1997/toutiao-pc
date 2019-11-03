@@ -5,6 +5,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from '@/router'
 import axios from '@/api'
 import plugin from '@/components'
+import '@/styles/index.less'
 Vue.use(plugin)
 
 Vue.prototype.$axios = axios
