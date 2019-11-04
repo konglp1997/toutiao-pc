@@ -1,12 +1,13 @@
 <template>
   <div class="my-image">
     <div class="btn_box" @click="open">
-      <img src="../assets/default.png" alt />
+      <img :src="value||btnImage" alt />
     </div>
 
     <!-- //提示框 -->
     <el-dialog :visible.sync="dialogVisible" width="700px">
       <el-tabs v-model="activeName" type="card">
+        <!-- 素材库 -->
         <el-tab-pane label="素材库" name="first">
           <!-- 按钮 -->
           <el-radio-group @change="toggleList" v-model="reqParams.collect" size="small">
@@ -37,25 +38,25 @@
             ></el-pagination>
           </div>
         </el-tab-pane>
-
+        <!-- 上传图片 -->
         <el-tab-pane label="上传图片" name="second">
-        <el-upload
-          class="avatar-uploader"
-          action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
-          :headers="headers"
-          :on-success="handleSuccess"
-          :show-file-list="false"
-          name="image"
-        >
-          <img v-if="uploadImageUrl" :src="uploadImageUrl" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+          <el-upload
+            class="avatar-uploader"
+            action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+            :headers="headers"
+            :on-success="handleSuccess"
+            :show-file-list="false"
+            name="image"
+          >
+            <img v-if="uploadImageUrl" :src="uploadImageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </el-tab-pane>
       </el-tabs>
-
+<!-- 底部 -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="confirmImage">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -63,8 +64,10 @@
 
 <script>
 import local from '@/utils/local.js'
-
+import defaultImage from '../assets/default.png'
 export default {
+  // value是封面图片地址
+  props: ['value'],
   data () {
     return {
       // 对话框显示隐藏
@@ -83,10 +86,32 @@ export default {
       //   选中图片的地址
       selectedImageUrl: null,
       // 上传的图片地址
-      uploadImageUrl: null
+      uploadImageUrl: null,
+      btnImage: defaultImage
     }
   },
   methods: {
+    confirmImage () {
+      if (this.activeName === 'first') {
+        if (!this.selectedImageUrl) {
+          this.$message.error('请选择一张图片')
+        }
+        // 给默认值赋值新地址
+
+        this.btnImage = this.selectedImageUrl
+        // 提交父组件
+        this.$emit('input', this.selectedImageUrl)
+        this.dialogVisible = false
+      } else {
+        if (!this.uploadImageUrl) {
+          this.$message.error('请选择一张图片')
+        }
+        // this.btnImage = this.uploadImageUrl
+        this.$emit('input', this.uploadImageUrl)
+
+        this.dialogVisible = false
+      }
+    },
     handleSuccess (res) {
       this.uploadImageUrl = res.data.url
       this.$message.success('上传成功')

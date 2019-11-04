@@ -5,9 +5,12 @@ import Home from '../views/home'
 import Welcome from '../views/welcome'
 import NotFound from '../views/404'
 import local from '@/utils/local'
-import Article from '@/views/article/article.vue'
+import Article from '@/views/article/article'
 import Image from '@/views/image'
-import Publish from '@/views/publish/publish.vue'
+import Publish from '@/views/publish/publish'
+import Setting from '@/views/setting'
+import Fans from '@/views/fans'
+import Comment from '@/views/comment'
 
 Vue.use(VueRouter)
 
@@ -37,6 +40,15 @@ const router = new VueRouter({
       }, {
         path: '/publish',
         component: Publish
+      }, {
+        path: '/comment',
+        component: Comment
+      }, {
+        path: '/fans',
+        component: Fans
+      }, {
+        path: '/setting',
+        component: Setting
       }]
     },
     {
