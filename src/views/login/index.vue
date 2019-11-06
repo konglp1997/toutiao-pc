@@ -65,7 +65,7 @@ export default {
       form: {
         name: '',
         code: '246810',
-        mobile: '13911111111'
+        mobile: '18888888888'
       },
       rules: {
         mobile: [
